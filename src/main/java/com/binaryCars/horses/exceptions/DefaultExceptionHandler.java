@@ -15,8 +15,8 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleException(ResourceNotFoundException e, HttpServletRequest request) {
 
-
-        return new ResponseEntity<>(new ApiError(request.getRequestURI(),
-        e.getMessage(),HttpStatus.NOT_FOUND.value(), LocalDateTime.now()),HttpStatus.NOT_FOUND);
+        ApiError apiError = new ApiError(request.getRequestURI(),
+                e.getMessage(), HttpStatus.NOT_FOUND.value(), LocalDateTime.now());
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 }

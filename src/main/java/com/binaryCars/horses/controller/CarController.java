@@ -2,32 +2,49 @@ package com.binaryCars.horses.controller;
 
 import com.binaryCars.horses.entity.Car;
 import com.binaryCars.horses.service.CarService;
-import com.binaryCars.horses.service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
-@RestController("/")
+@RequestMapping("/cars")
+@RestController
 public class CarController {
-
 
 
     @Autowired
     CarService carService;
-    @GetMapping("/cars")
-    public ResponseEntity<List<Car>> getCars(){
+
+    @GetMapping({"/?page={number}&size={pageSize}", "?page={number}&size={size}"})
+    public ResponseEntity<Page<Car>> getCars(@PathVariable("number") Integer number, @PathVariable("size") Integer size) {
+        return new ResponseEntity<>(carService.getCars(number, size), HttpStatus.OK);
+    }
+
+    @GetMapping({"/", ""})
+    public ResponseEntity<Page<Car>> getCars() {
         return new ResponseEntity<>(carService.getCars(), HttpStatus.OK);
     }
 
-    @GetMapping("/cars/:id")
-    public ResponseEntity<Car> getCarById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(carService.getCarById(id),HttpStatus.OK);
+    @GetMapping({"/{id}", "/{id}/"})
+    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+        return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
+    }
+
+    @PostMapping({"/", ""})
+    public ResponseEntity<Car> saveCar(@RequestBody Car car) {
+        return new ResponseEntity<Car>(carService.saveCar(car), HttpStatus.CREATED);
+    }
+
+    @PutMapping({"/{id}", "/{id}/"})
+    public ResponseEntity<Car> updateCar(@PathVariable("id") Long id,
+                                         @RequestBody Car car) {
+
+        return ResponseEntity.ok(carService.updateCar(id, car));
+    }
+
+    @DeleteMapping({"/{id}","/{id}/"})
+    public void deleteCar(@PathVariable("id") Integer id){
+        carService.deleteCar(id.longValue());
     }
 }

@@ -2,15 +2,13 @@ package com.binaryCars.horses.entity;
 
 import jakarta.persistence.*;
 
-import java.lang.annotation.Target;
-
 @Entity
 
 public class Car {
     @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String make,model,color,registerNumber;
+    private String make, model, color, registerNumber;
 
     private int year;
     private double price;
@@ -32,14 +30,14 @@ public class Car {
         this.price = price;
     }
 
-    public Car(String make, String model, String color, String registerNumber, int year, double price,Owner owner) {
+    public Car(String make, String model, String color, String registerNumber, int year, double price, Owner owner) {
         this.make = make;
         this.model = model;
         this.color = color;
         this.registerNumber = registerNumber;
         this.year = year;
         this.price = price;
-        this.owner= owner;
+        this.owner = owner;
     }
 
     public Long getId() {

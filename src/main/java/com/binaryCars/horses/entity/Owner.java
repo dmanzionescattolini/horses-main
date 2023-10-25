@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer","hibernate"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "hibernate"})
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +15,7 @@ public class Owner {
 
     private String firstName;
     private String lastName;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 
     @JsonIgnore
     private List<Car> cars;
@@ -23,7 +23,7 @@ public class Owner {
     public Owner() {
     }
 
-    public Owner( String firstName, String lastName) {
+    public Owner(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
